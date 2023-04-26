@@ -3,6 +3,7 @@ import time
 import mysql.connector
 import csv
 import gestioneData
+from dotenv import dotenv_values
 
 class MyThread(threading.Thread):
 
@@ -23,24 +24,34 @@ class MyThread(threading.Thread):
     def insert_data_from_csv(self):
         #gestioneData.gestioneData.downloadBenziani(self)
         #gestioneData.gestioneData.downloadPrezzi(self)
-        
+        env = dotenv_values(".env")
+
+        host_name = env['DB_HOST']
+        host_user = env['DB_USER']
+        host_pass = env['DB_PASSWORD']
+        host_dbname = env['DB_NAME']
+
         mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="",
-            database="carbu_bot"
+            host = host_name,
+            user = host_user,
+            password = host_pass,
+            database = host_dbname
         )
         cursor = mydb.cursor()
         
-        cursor.execute('DELETE from prezzi where 1')
         # drop foreign key constraint on prezzo table
         #cursor.execute('ALTER TABLE prezzi DROP FOREIGN KEY benzinai')
         # truncate table
-        cursor.execute('DELETE from benzinai where 1')
+
         # recreate foreign key constraint on prezzi table
         #cursor.execute('ALTER TABLE prezzi ADD CONSTRAINT benzinai FOREIGN KEY (idImpianto) REFERENCES benzinai (idImpianto)')
-        
 
+        # elimina tutti i record dalla tabella prezzi 
+        cursor.execute('DELETE from prezzi where 1')
+        
+        # elimina tutti i record dalla tabella benzinai
+        cursor.execute('DELETE from benzinai where 1')
+        
         with open('anagrafica_impianti_attivi.csv') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=';')
             # Skip the first 2 row
