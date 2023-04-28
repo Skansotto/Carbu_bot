@@ -9,7 +9,7 @@ def main():
 
     # bot.getUpdates()['result'][0]['message']['text'] == "/start"
     
-    print(time.now())
+    # print(time.now())
     dati = MyThread()
     dati.start()
 
