@@ -13,6 +13,9 @@ def main():
     dati = MyThread()
     dati.start()
 
+    # TO-DO:
+    # Trovare un modo attendere invio messaggio
+
     # attendi che qualcuno invii il comando /nuovoVeicolo
     while True:
         updates = bot.getUpdates()
@@ -23,6 +26,12 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+
+
+
 
 # def task():
 #     print('')
