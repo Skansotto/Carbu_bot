@@ -10,30 +10,32 @@ class myTelegram:
     def __init__(self, token):
         self.token = token
         self.url = "https://api.telegram.org/bot"
+        self.getUpdates()
 
     def getUpdates(self, update_id=-1):
         #if (update_id == -1):
         urlUpdate = self.url+self.token+"/getUpdates?offset=-1"
-        response = requests.get(urlUpdate)
-        print(len(response.json()['result']))
+        self.response = requests.get(urlUpdate).json()
+        #print(len(response.json()['result']))
         # else:
         #     urlUpdate = self.url+self.token+"/getUpdates?offset={update_id}"
         #     print(urlUpdate)
         #     response = requests.get(urlUpdate)
         #     rep = response.json()
-        return response.json()
+        #return response.json()
 
-    def get_chatId(self, response):
-        chat_id = response["result"][0]["message"]["chat"]["id"]
-        return chat_id
+    def get_chatId(self):
+        return self.response["result"][0]["message"]["chat"]["id"]
     
-    def get_updateId(self, response):
-        update_id = response["result"][0]["update_id"]
-        return update_id
+    def get_messageId(self):
+        return self.response["result"][0]["message"]["message_id"]
+
+    def get_updateId(self):
+        return self.response["result"][0]["update_id"]
     
-    def get_text(self, response):
-        text = response["result"][0]["text"]
-        return text
+    def get_text(self):
+        return self.response["result"][0]['message']["text"]
+        
     
     def send_message(self, chat_id, message):
         urlMessage = self.url+self.token+"/sendMessage?chat_id={chat_id}&text={message}"
