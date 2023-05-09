@@ -12,14 +12,15 @@ class myTelegram:
         self.url = "https://api.telegram.org/bot"
 
     def getUpdates(self, update_id=-1):
-        if (update_id == -1):
-            urlUpdate = self.url+self.token+"/getUpdates"
-            response = requests.get(urlUpdate)
-            print(response)
-        else:
-            urlUpdate = self.url+self.token+"/getUpdates?offset={update_id}"
-            response = requests.get(urlUpdate)
-            rep = response.json()
+        #if (update_id == -1):
+        urlUpdate = self.url+self.token+"/getUpdates?offset=-1"
+        response = requests.get(urlUpdate)
+        print(len(response.json()['result']))
+        # else:
+        #     urlUpdate = self.url+self.token+"/getUpdates?offset={update_id}"
+        #     print(urlUpdate)
+        #     response = requests.get(urlUpdate)
+        #     rep = response.json()
         return response.json()
 
     def get_chatId(self, response):
@@ -53,10 +54,8 @@ class myTelegram:
         mycursor.execute("SELECT lastUpdate * FROM update_dati")
 
         result = mycursor.fetchall()
-        
 
         if (datetime.now() == datetime.hour(8)):
             chk=True;
-        
 
         return chk;

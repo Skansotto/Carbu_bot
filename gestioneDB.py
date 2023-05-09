@@ -19,10 +19,10 @@ class MyThread(threading.Thread):
 
         env = dotenv_values(".env")
 
-        host_name = env['DB_HOST']
-        host_user = env['DB_USER']
-        host_pass = env['DB_PASSWORD']
-        host_dbname = env['DB_NAME']
+        host_name = "localhost" #env['DB_HOST']
+        host_user = "root" #env['DB_USER']
+        host_pass = "" #env['DB_PASSWORD']
+        host_dbname = "carbu_bot" #env['DB_NAME']
 
         mydb = mysql.connector.connect(
             host = host_name,
@@ -85,7 +85,9 @@ class MyThread(threading.Thread):
                 dtComu=row[4]
 
                 # Query "incriminata"
-                cursor.execute('INSERT INTO prezzi (idImpianto, descCarburante, prezzo, isSelf, dtComu) VALUES (%s, %s, %s, %s, %s)', (idI, descCarb, prezzo, isSelf, dtComu))
+                if (isSelf == 1):
+                    cursor.execute('INSERT INTO prezzi (idImpianto, descCarburante, prezzo, isSelf, dtComu) VALUES (%s, %s, %s, %s, %s)', (idI, descCarb, prezzo, isSelf, dtComu))
+
                 mydb.commit()
                 print("prezzi mattutini")
 
