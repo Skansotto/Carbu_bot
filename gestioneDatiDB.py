@@ -2,7 +2,7 @@ import threading
 import time
 import mysql.connector
 import csv
-import gestioneData
+import gestioneDatiGov
 from dotenv import dotenv_values
 
 host_name = "localhost"
@@ -11,11 +11,10 @@ host_pass = ""
 host_dbname = "carbu_bot"
 
 
-class gestioneDatiDB(threading.Thread):
+class gestioneDatiDB():
 
     def __init__(self):
-        threading.Thread.__init__(self)
-        self.skipped_ids = []
+        pass
 
     # def run(self):
     #     now = time.localtime()
@@ -32,8 +31,7 @@ class gestioneDatiDB(threading.Thread):
 
         cursor = mydb.cursor()
 
-        cursor.execute(
-            'INSERT INTO users (chatId, username) VALUES (%s, %s)', (username, chatId))
+        cursor.execute('INSERT INTO users (chatId, username) VALUES (%s, %s)', (username, chatId))
         print("Utente inserito con successo")
         res = mydb.commit()
 

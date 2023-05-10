@@ -16,6 +16,7 @@ class myTelegram:
         #if (update_id == -1):
         urlUpdate = self.url+self.token+"/getUpdates?offset=-1"
         self.response = requests.get(urlUpdate).json()
+        
         #print(len(response.json()['result']))
         # else:
         #     urlUpdate = self.url+self.token+"/getUpdates?offset={update_id}"
@@ -34,8 +35,10 @@ class myTelegram:
         return self.response["result"][0]["update_id"]
     
     def get_text(self):
-        return self.response["result"][0]['message']["text"]
-        
+        if (self.response["result"][0]['message']["text"]!=None):
+            return self.response["result"][0]['message']["text"]
+        else:
+            return "Nessun messaggio!"
     
     def send_message(self, chat_id, message):
         urlMessage = self.url+self.token+"/sendMessage?chat_id={chat_id}&text={message}"
@@ -57,7 +60,7 @@ class myTelegram:
 
         result = mycursor.fetchall()
 
-        if (datetime.now() == datetime.hour(8)):
+        if (datetime.now().hour >= 8):
             chk=True;
 
         return chk;

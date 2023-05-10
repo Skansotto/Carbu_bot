@@ -5,7 +5,7 @@ import mysql.connector
 import prezzi
 from benzinaio import benzinaio
 
-class gestioneData:
+class gestioneDatiGov:
     
     def __init__(self):
         pass
