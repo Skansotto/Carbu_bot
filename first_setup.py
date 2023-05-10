@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime
+from gestioneDB import MyThread
 import mysql.connector
 # custom
 import prezzi
