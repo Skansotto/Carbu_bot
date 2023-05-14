@@ -10,6 +10,12 @@ host_user = "root"
 host_pass = ""
 host_dbname = "carbu_bot"
 
+mydb = mysql.connector.connect(
+    host=host_name,
+    user=host_user,
+    password=host_pass,
+    database=host_dbname
+)
 
 class gestioneDatiDB():
 
@@ -21,13 +27,6 @@ class gestioneDatiDB():
     #     self.insert_data_from_csv()
 
     def insert_persona(self, username, chatId):
-
-        mydb = mysql.connector.connect(
-            host=host_name,
-            user=host_user,
-            password=host_pass,
-            database=host_dbname
-        )
 
         cursor = mydb.cursor()
 
@@ -42,13 +41,6 @@ class gestioneDatiDB():
     def insert_veicolo(self, vehicleType, fuelType, tankCapacity, maxKm, idChatUtente):
 
         eseguito = False
-
-        mydb = mysql.connector.connect(
-            host=host_name,
-            user=host_user,
-            password=host_pass,
-            database=host_dbname
-        )
 
         cursor = mydb.cursor()
 

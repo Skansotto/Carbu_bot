@@ -12,18 +12,9 @@ class myTelegram:
         self.url = "https://api.telegram.org/bot"
         self.getUpdates()
 
-    def getUpdates(self, update_id=-1):
-        #if (update_id == -1):
-        urlUpdate = self.url+self.token+"/getUpdates?offset=-1"
-        self.response = requests.get(urlUpdate).json()
-        
-        #print(len(response.json()['result']))
-        # else:
-        #     urlUpdate = self.url+self.token+"/getUpdates?offset={update_id}"
-        #     print(urlUpdate)
-        #     response = requests.get(urlUpdate)
-        #     rep = response.json()
-        #return response.json()
+    def getUpdates(self):
+        urlUpdate = self.url+self.token+"/getUpdates?offset=+1" # prima avevo messo -1
+        self.response = requests.get(urlUpdate)
 
     def get_chatId(self):
         return self.response["result"][0]["message"]["chat"]["id"]

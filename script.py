@@ -1,3 +1,5 @@
+# come si potrebbe fare una gestione degli stati nel caso si vogliano gestire più utenti (bot non a uso personale)
+
 __user_statuses = dict[int, str]
 
 id_user = 0
