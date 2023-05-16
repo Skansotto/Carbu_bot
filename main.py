@@ -186,10 +186,10 @@ def main():
                     longitudine = str(messaggio["message"]["location"]["logitude"])
                     
                     queryRicercaBenzinai = 'SELECT *, (((acos(sin(('+latitudine+'*pi()/180)) * sin((`latitude`*pi()/180)) + cos(('+latitudine+'*pi()/180)) * cos((`latitude`*pi()/180)) * cos((('+longitudine+'- `longitude`) * pi()/180)))) * 180/pi()) * 60 * 1.1515 * 1.609344) as distance FROM `benzinai` WHERE distance <= '+maxKm +''
-                    pass #esegui query location messaggio["message"]["location"]["latitude"]
-
-                else:
                     
+                    #questa è la query di concil che le dicevo --> a lei va a me no :/
+                    """SELECT * FROM impianti join prezzi on impianti.idImpianto = prezzi.idImpianto WHERE descCarburante = "Benzina" AND (acos(sin(45.815132)*sin( Latitudine )+cos(45.815132)*cos( Latitudine )*cos( Longitudine - 9.227647))*6371) BETWEEN 0 AND 400 ORDER By prezzo,(acos(sin(45.815132)*sin( Latitudine )+cos(45.815132)*cos( Latitudine )*cos( Longitudine - 9.227647))*6371) ASC;"""
+                else:
                     bot.send_message(chat_id, "Inserisci prima i tuoi dati con /start")
                  
 
