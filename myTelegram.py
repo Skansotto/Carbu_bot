@@ -13,29 +13,38 @@ class myTelegram:
         self.getUpdates()
 
     def getUpdates(self):
-        urlUpdate = self.url+self.token+"/getUpdates?offset=+1" # prima avevo messo -1
+        urlUpdate = self.url+self.token+"/getUpdates" # prima avevo messo -1
         self.response = requests.get(urlUpdate)
+        
+        lst = []
+        if self.response.status_code==200:
+            lst = self.response.json()
+            if len(lst["result"]) > 0:
+                requests.get(urlUpdate,params={"offset":lst['result'][-1]['update_id']+1})
+         
+        return lst['result']
 
-    def get_chatId(self):
-        return self.response["result"][0]["message"]["chat"]["id"]
+    def get_chatId(self, messaggio):
+        return messaggio["message"]["chat"]["id"]
     
-    def get_messageId(self):
-        return self.response["result"][0]["message"]["message_id"]
+    def get_messageId(self, messaggio):
+        return messaggio["message"]["message_id"]
 
-    def get_updateId(self):
-        return self.response["result"][0]["update_id"]
+    def get_updateId(self, messaggio):
+        return messaggio["update_id"]
     
-    def get_text(self):
-        if (self.response["result"][0]['message']["text"]!=None):
-            return self.response["result"][0]['message']["text"]
+    def get_text(self, messaggio):
+        if (messaggio['message']["text"]!=None):
+            return messaggio['message']["text"]
         else:
-            return "Nessun messaggio!"
+            return ""
     
     def send_message(self, chat_id, message):
         urlMessage = self.url+self.token+"/sendMessage?chat_id={chat_id}&text={message}"
         response = requests.get(urlMessage.format(chat_id=chat_id, message=message))
         return response.json()
     
+    # da finire
     def controllo_orario():
         chk=False;
 
