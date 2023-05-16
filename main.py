@@ -19,10 +19,10 @@ def main():
     # TO-DO:
     # Trovare un modo attendere invio messaggio
 
-    host_name = "localhost" #env['DB_HOST']
-    host_user = "root" #env['DB_USER']
-    host_pass = "" #env['DB_PASSWORD']
-    host_dbname = "carbu_bot" #env['DB_NAME']
+    host_name = "localhost"     #env['DB_HOST']
+    host_user = "root"          #env['DB_USER']
+    host_pass = ""              #env['DB_PASSWORD']
+    host_dbname = "carbu_bot"   #env['DB_NAME']
 
     mydb = mysql.connector.connect(
         host = host_name,
@@ -97,7 +97,7 @@ def main():
 
                     chk = False
 
-                    #fare bottonitipo veicolo
+                    #fare bottoni tipo veicolo
                     #requests.get('https://api.telegram.org/bot6297186887:AAGsGTHHqERmCnFTx7KwVZhzHC3OJiuc1Uo/sendMessage?chat_id='+str(chat_id)+'&text=Che veicolo vuoi inserire?&reply_markup=%7B%22keyboard%22%3A+%5B%5B%22Auto%22%82%22Moto%22%5D%5D%7D')
                     bot.send_message(chat_id, "Che veicolo vuoi inserire? (auto - moto)")
 
@@ -186,7 +186,9 @@ def main():
                     longitudine = str(messaggio["message"]["location"]["logitude"])
                     
                     queryRicercaBenzinai = 'SELECT *, (((acos(sin(('+latitudine+'*pi()/180)) * sin((`latitude`*pi()/180)) + cos(('+latitudine+'*pi()/180)) * cos((`latitude`*pi()/180)) * cos((('+longitudine+'- `longitude`) * pi()/180)))) * 180/pi()) * 60 * 1.1515 * 1.609344) as distance FROM `benzinai` WHERE distance <= '+maxKm +''
-                    
+                    cursor.execute(queryRicercaBenzinai)
+
+                    mydb.commit()
                     #questa è la query di concil che le dicevo --> a lei va a me no :/
                     """SELECT * FROM impianti join prezzi on impianti.idImpianto = prezzi.idImpianto WHERE descCarburante = "Benzina" AND (acos(sin(45.815132)*sin( Latitudine )+cos(45.815132)*cos( Latitudine )*cos( Longitudine - 9.227647))*6371) BETWEEN 0 AND 400 ORDER By prezzo,(acos(sin(45.815132)*sin( Latitudine )+cos(45.815132)*cos( Latitudine )*cos( Longitudine - 9.227647))*6371) ASC;"""
                 else:
