@@ -3,7 +3,6 @@ import datetime
 import time
 from threading import Thread
 from gestioneDB import MyThread
-from gestioneDatiDB import gestioneDatiDB
 import mysql.connector
 import requests
 import urllib.parse
